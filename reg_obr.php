@@ -12,7 +12,7 @@ if ($mysqli == false) {
   $email = $_POST['email'];
   $pass = $_POST['pass'];
 
-  $result = $mysqli->query("SELECT * FROM `users` WHERE `email` = '$email' AND `pass`='$pass'");
+  $result = $mysqli->query("SELECT * FROM `users` WHERE `email` = '$email' ");
 
   if ($result->num_rows != 0) {
     print("exist");
