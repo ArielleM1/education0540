@@ -1,0 +1,119 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="category">
+	<div class="container h-100">
+		<div class="blog-banner">
+			<div class="text-center">
+				<h1>Авторизация / Регистрация</h1>
+				<nav aria-label="breadcrumb" class="banner-breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Домой</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Авторизация/Регистрация</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- ================ end banner area ================= -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section-margin">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="login_box_img">
+					<div class="hover">
+						<h4>Ты новенький?</h4>
+						<p>
+							There are advances being made in science and technology everyday, and a good example
+							of this is the
+						</p>
+						<a class="button button-account" href="register.html">Создать аккаунт</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="login_form_inner">
+					<h3>Авторизоваться</h3>
+					<form class="row login_form" onsubmit="sendForm(this); return false">
+						<div class="col-md-12 form-group">
+							<input
+								type="text"
+								class="form-control"
+								id="name"
+								name="email"
+								placeholder="Email"
+								required
+							/>
+						</div>
+						<div class="col-md-12 form-group">
+							<input
+								type="text"
+								class="form-control"
+								id="name"
+								name="pass"
+								placeholder="Пароль"
+								required
+							/>
+						</div>
+
+						<div class="col-md-12 form-group">
+							<button type="submit" value="submit" class="button button-login w-100">
+								Авторизоваться
+							</button>
+							<a href="/pages/users/index.html">Папка users в pages</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--================End Login Box Area =================-->
+
+<!-- Modal Start-->
+<div
+	class="modal fade"
+	id="Modal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+  style="top: 175px"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Вы успешно авторизованы</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Спасибо за авторизацию, вы будете перенаправлены в личный кабинет через 3 секунды
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal End-->
+
+<script>
+	async function sendForm(form) {
+		info.innerText = ``;
+		let formData = new formData(form);
+
+		let response = await fetch("authUser", {
+			method: "POST",
+			body: formData,
+		});
+		let res = await responce.json();
+		if (res.result == "success") {
+			$("#modal").modal("authOk");
+			setTimeout(() => {
+				location.href = "/users/profile";
+			}, 3000);
+		} else if (res.result == "authFailed") {
+			info.innerText = `Данный пользователь не зарегистрирован!`;
+		}
+	}
+</script>
