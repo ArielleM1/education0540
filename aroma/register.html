@@ -1,0 +1,123 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="category">
+	<div class="container h-100">
+		<div class="blog-banner">
+			<div class="text-center">
+				<h1>Регистрация</h1>
+				<nav aria-label="breadcrumb" class="banner-breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Домой</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Регистрация</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- ================ end banner area ================= -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section-margin">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="login_box_img">
+					<div class="hover">
+						<h4>У вас уже есть аккаунт?</h4>
+						<p>Идите на страницу входа в ЛК.</p>
+						<a class="button button-account" href="/auth">Авторизоваться</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="login_form_inner register_form_inner">
+					<h3>Зарегистрироваться</h3>
+					<form class="row login_form" onsubmit="sendForm(this); return false">
+						<div class="col-md-12 form-group">
+							<input type="text" class="form-control" name="name" placeholder="Имя" required />
+						</div>
+						<div class="col-md-12 form-group">
+							<input
+								type="text"
+								class="form-control"
+								name="lastname"
+								placeholder="Фамилия"
+								required
+							/>
+						</div>
+						<div class="col-md-12 form-group">
+							<input type="email" class="form-control" name="email" placeholder="Email" required />
+							<p id="info" style="color: red"></p>
+						</div>
+						<div class="col-md-12 form-group">
+							<input
+								type="password"
+								class="form-control"
+								name="pass"
+								placeholder="Пароль"
+								required
+							/>
+						</div>
+						<div class="col-md-12 form-group">
+							<div class="creat_account">
+								<input type="checkbox" required />
+								<label for="f-option2">Согласен на обработку персональных данных</label>
+							</div>
+						</div>
+						<div class="col-md-12 form-group">
+							<button type="submit" class="button button-register w-100">Зарегистрироваться</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--================End Login Box Area =================-->
+
+<!-- Modal Start-->
+<div
+	class="modal fade"
+	id="Modal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+	style="top: 175px"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Вы успешно зарегистрированы</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Спасибо за регистрацию, вы будете перенаправлены в личный кабинет через 3 секунды
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal End-->
+
+<script>
+	async function sendForm(form) {
+		info.innerText = ``;
+		let formData = new formData(form);
+
+		let response = await fetch("addUser", {
+			method: "POST",
+			body: formData,
+		});
+		let res = await responce.json();
+		if (res.result == "success") {
+			$("#modal").modal("show");
+			setTimeout(() => {
+				location.href = "auth";
+			}, 3000);
+		} else if (res.result == "exist") {
+			info.innerText = `Такой пользователь уже есть!`;
+		}
+	}
+</script>
