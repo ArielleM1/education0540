@@ -53,12 +53,31 @@ class Users
     $pass = trim($_POST["pass"]);
 
     $result = $mysqli->query("SELECT * FROM `users` WHERE `email` = '$email'");
-    $result = $result->fetch_assoc();
+    $result = $result->fetch_assoc(); // преобразование к массиву
 
     if (password_verify($pass, $result["pass"])) {
       return json_encode(["result" => "authOk"]);
     } else {
       return json_encode(["result" => "authFailed"]);
     }
+  }
+  // Статический метод получения юзера
+  static function getUser($userId)
+  {
+    global $mysqli;
+    $result = $mysqli->query("SELECT * FROM `users` WHERE `id` = '$userId'");
+    $result = $result->fetch_assoc(); // преобразование к массиву
+
+    return json_encode($result);
+  }
+  // Статический метод чего-то еще
+  static function getUsers()
+  {
+    global $mysqli;
+    $result = $mysqli->query("SELECT `name`, `lastname`, `email`, `id` FROM `users` WHERE 1");
+    while ($row = $result->fetch_assoc()) {
+      $users[] = $row;
+    }
+    return json_encode($users);
   }
 }
