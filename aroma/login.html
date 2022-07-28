@@ -3,10 +3,10 @@
 	<div class="container h-100">
 		<div class="blog-banner">
 			<div class="text-center">
-				<h1>Авторизация / Регистрация</h1>
+				<h1>Авторизация</h1>
 				<nav aria-label="breadcrumb" class="banner-breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#">Домой</a></li>
+						<li class="breadcrumb-item"><a href="/">Домой</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Авторизация/Регистрация</li>
 					</ol>
 				</nav>
@@ -24,28 +24,23 @@
 				<div class="login_box_img">
 					<div class="hover">
 						<h4>У вас еще нет аккаунта?</h4>
-						<p>Тогда сейчас самое подходящее время, чтобы его создать, нажав на кнопку ниже.</p>
-						<a class="button button-account" href="/reg">Создать аккаунт</a>
+						<p>Тогда самое подходящее время его создать, нажав на кнопку ниже.</p>
+						<a class="button button-account" href="/reg">Зарегистрировать аккаунт</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<div class="login_form_inner">
-					<h3>Авторизоваться</h3>
-					<form class="row login_form" onsubmit="sendForm(this); return false">
+					<h3>Авторизация</h3>
+					<form class="row login_form" onsubmit="sendForm(this); return false;">
 						<div class="col-md-12 form-group">
-							<input type="email" class="form-control" name="email" placeholder="Email" required />
+							<input type="email" class="form-control" name="email" placeholder="Email" />
 						</div>
 						<div class="col-md-12 form-group">
-							<input
-								type="password"
-								class="form-control"
-								name="pass"
-								placeholder="Пароль"
-								required
-							/>
+							<input type="password" class="form-control" name="pass" placeholder="Пароль" />
+							<p id="info"></p>
 						</div>
-						<p id="info" style="color: red"></p>
+
 						<div class="col-md-12 form-group">
 							<button type="submit" value="submit" class="button button-login w-100">
 								Авторизоваться
@@ -58,21 +53,20 @@
 	</div>
 </section>
 <!--================End Login Box Area =================-->
-
-<!-- Modal Start-->
+<!-- Modal start -->
 <div
 	class="modal fade"
-	id="Modal"
+	id="modal"
 	tabindex="-1"
 	role="dialog"
 	aria-labelledby="exampleModalLabel"
 	aria-hidden="true"
-	style="top: 175px"
+	style="top: 165px"
 >
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Вы успешно авторизованы</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Вы успешно авторизовались!</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -81,14 +75,14 @@
 		</div>
 	</div>
 </div>
-<!-- Modal End-->
+<!-- Modal end -->
 
 <script>
 	async function sendForm(form) {
 		info.innerText = ``;
-		let formData = new formData(form);
+		let formData = new FormData(form);
 
-		let response = await fetch("authUser", {
+		let responce = await fetch("authUser", {
 			method: "POST",
 			body: formData,
 		});
@@ -99,9 +93,9 @@
 				location.href = "/users/profile";
 			}, 3000);
 		} else if (res.result == "authFailed") {
-			info.innerText = `Неверный логин или пароль`;
+			info.innerText = `Неправильный логин или пароль`;
 		} else {
-			alert("Неизвестная ошибка");
+			alert("Неизвестная ошибка ((");
 		}
 	}
 </script>

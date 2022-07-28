@@ -1,5 +1,6 @@
 <?php
-class Users
+
+class User
 {
   private $name;
   private $lastname;
@@ -29,7 +30,8 @@ class Users
   {
     return $this->email;
   }
-  // Статический метод добавления юзера
+
+  //Статический метод добавления пользователя
   static function addUser($name, $lastname, $email, $pass)
   {
     global $mysqli;
@@ -37,7 +39,7 @@ class Users
     $pass = trim($pass);
     $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-    $result = $mysqli->query("SELECT * FROM `users` WHERE `email` = '$email'");
+    $result = $mysqli->query("SELECT * FROM `users` WHERE `email`='$email'");
     if ($result->num_rows != 0) {
       return json_encode(["result" => "exist"]);
     } else {
@@ -45,32 +47,34 @@ class Users
       return json_encode(["result" => "success"]);
     }
   }
-  // Статический метод авторизации юзера
+  //Статический метод авторизации пользователя
   static function authUser($email, $pass)
   {
     global $mysqli;
-    $email = trim(mb_strtolower($_POST['email']));
-    $pass = trim($_POST["pass"]);
+    $email = trim(mb_strtolower($email));
+    $pass = trim($pass);
 
-    $result = $mysqli->query("SELECT * FROM `users` WHERE `email` = '$email'");
-    $result = $result->fetch_assoc(); // преобразование к массиву
+    $result = $mysqli->query("SELECT * FROM `users` WHERE `email`='$email'");
+    $result = $result->fetch_assoc();
 
     if (password_verify($pass, $result["pass"])) {
+      $_SESSION["id"] = $result["id"];
       return json_encode(["result" => "authOk"]);
     } else {
       return json_encode(["result" => "authFailed"]);
     }
   }
-  // Статический метод получения юзера
+  //Статический метод получения пользователя
   static function getUser($userId)
   {
     global $mysqli;
-    $result = $mysqli->query("SELECT * FROM `users` WHERE `id` = '$userId'");
-    $result = $result->fetch_assoc(); // преобразование к массиву
+
+    $result = $mysqli->query("SELECT * FROM `users` WHERE `id`='$userId'");
+    $result = $result->fetch_assoc();
 
     return json_encode($result);
   }
-  // Статический метод чего-то еще
+
   static function getUsers()
   {
     global $mysqli;
