@@ -15,7 +15,7 @@ if ($url[1] == "auth") {
 } else if ($url[1] == "contact") {
   $content = file_get_contents("pages/contact.php");
 } else if ($url[1] == "users") {
-  $require_once("pages/users/index.html");
+  require_once("pages/users/index.html");
 } else if ($url[1] == "addUser") {
   echo User::addUser($_POST["name"], $_POST["lastname"], $_POST["email"], $_POST["pass"]);
 } else if ($url[1] == "authUser") {
@@ -23,9 +23,9 @@ if ($url[1] == "auth") {
 } else if ($url[1] == "getUser") {
   echo User::getUser($_SESSION["id"]);
 } else if ($url[1] == "getUsers") {
-  echo User::getUser();
+  echo User::getUsers();
 } else {
   $content = file_get_contents("pages/index.php");
 }
-if (!empty($content));
-require_once("template.php");
+if (!empty($content))
+  require_once("template.php");
